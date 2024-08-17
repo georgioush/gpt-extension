@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Request</title>
+    <style>
+        .red-text {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>OpenAI Request</h1>
+
+    <label for="apiKey">APIキー:</label>
+    <input type="text" id="apiKey" size="40">
+    <br><br>
+
+    <label for="urlEndpoint">エンドポイントURL:</label>
+    <input type="text" id="urlEndpoint" size="60">
+    <br><br>
+
+    <button id="requestButton">リクエストを送信</button>
+    
+    <p class="red-text">AOAIのプレイグラウンドでAPIキーとエンドポイントが確認できます。</p>
+
+    <script src="popup.js"></script>
+</body>
+</html>
