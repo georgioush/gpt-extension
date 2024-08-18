@@ -9,6 +9,11 @@
             color: red;
             font-size: 0.9em;
         }
+        pre {
+            white-space: pre-wrap; /* ここを追加してテキストを折り返すようにします */
+            word-wrap: break-word; /* ここを追加して長い単語も折り返すようにします */
+            font-size: 1.2em; /* 文字サイズを大きくします */
+        }
     </style>
 </head>
 <body>
@@ -20,6 +25,10 @@
 
     <label for="urlEndpoint">エンドポイントURL:</label>
     <input type="text" id="urlEndpoint" size="60">
+    <br><br>
+
+    <label for="userPrompt">プロンプト:</label>
+    <input type="text" id="userPrompt" size="60" value="OpenAI について説明してください。">
     <br><br>
 
     <button id="requestButton">リクエストを送信</button>
