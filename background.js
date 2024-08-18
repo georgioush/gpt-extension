@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.set({ apiKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', urlEndpoint: 'https://<your-resource-name>.openai.azure.com/openai/deployments/<your-deployment-id>/chat/completions?api-version=<api-version>' });
+    chrome.storage.sync.set({ apiKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', urlEndpoint: 'https://<your-resource-name>.openai.azure.com/openai/deployments/<your-deployment-id>/chat/completions?api-version=<api-version>' });
 });
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             messages: [
                 {
                     role: 'system',
-                    content: [{ type: 'text', text: 'あなたは情報を探すのを手助けするAIアシスタントです。' }]
+                    content: 'あなたは情報を探すのを手助けするAIアシスタントです。'
                 },
                 { role: 'user', content: 'Open AI について日本語で説明してください' }
             ],
@@ -32,6 +32,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
             const data = await response.json();
             console.log('Response: ', data.choices[0].message.content);
+
+            // 取得したデータをpopup.jsに送信
+            chrome.runtime.sendMessage({ action: 'displayResponse', content: data.choices[0].message.content });
         } catch (error) {
             console.error('Error:', error);
         }
