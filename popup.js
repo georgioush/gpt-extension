@@ -40,11 +40,9 @@ document.getElementById('clearButton').addEventListener('click', () => {
 });
 
 // バックグラウンドスクリプトからのメッセージを受信して表示
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === 'displayResponse') {
-        document.getElementById('response').innerText = message.content;
-        chrome.storage.sync.set({ response: message.content }, () => {
-            console.log('レスポンスが保存されました。');
-        });
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (changes.response) {
+        document.getElementById('response').innerText = changes.response.newValue;
+        console.log('レスポンスが更新されました。');
     }
 });
