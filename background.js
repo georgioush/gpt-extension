@@ -15,9 +15,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 },
                 { role: 'user', content: 'Open AI について日本語で説明してください' }
             ],
-            temperature: 0.7,
+            temperature: 0.2,
             top_p: 0.95,
-            max_tokens: 800
+            max_tokens: 10000
         };
 
         try {
@@ -33,8 +33,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             const data = await response.json();
             console.log('Response: ', data.choices[0].message.content);
 
-            // 取得したデータをpopup.jsに送信
-            chrome.runtime.sendMessage({ action: 'displayResponse', content: data.choices[0].message.content });
+            // 取得したデータをchrome.storageに保存
+            chrome.storage.sync.set({ response: data.choices[0].message.content }, () => {
+                console.log('Response has been saved.');
+            });
         } catch (error) {
             console.error('Error:', error);
         }
