@@ -51,5 +51,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         }
     } else if (message.action === 'logMainTabInfo') {
         console.log('MainTab info received:', message.mainTabInfo);
+        console.log('MainTab body received:', message.mainTabBody);
     }
 });

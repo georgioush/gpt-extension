@@ -66,10 +66,24 @@ document.getElementById('getMainTabButton').addEventListener('click', () => {
             document.getElementById('mainTabInfo').innerText = mainTabInfo;
             console.log('MainTab info:', mainTabInfo);
 
-            // 取得したデータをバックグラウンドスクリプトに送信
-            chrome.runtime.sendMessage({
-                action: 'logMainTabInfo',
-                mainTabInfo: mainTabInfo
+            // メインタブの <body> 情報を取得
+            chrome.scripting.executeScript({
+                target: { tabId: mainTab.id },
+                func: () => document.body.innerHTML
+            }, (results) => {
+                if (results && results[0] && results[0].result) {
+                    const mainTabBody = results[0].result;
+                    console.log('MainTab body:', mainTabBody);
+
+                    // 取得したデータをバックグラウンドスクリプトに送信
+                    chrome.runtime.sendMessage({
+                        action: 'logMainTabInfo',
+                        mainTabInfo: mainTabInfo,
+                        mainTabBody: mainTabBody
+                    });
+                } else {
+                    console.log('Failed to retrieve main tab body.');
+                }
             });
         } else {
             console.log('No active tab found.');
