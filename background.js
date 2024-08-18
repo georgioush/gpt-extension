@@ -49,5 +49,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         } catch (error) {
             console.error('Error:', error);
         }
+    } else if (message.action === 'logMainTabInfo') {
+        console.log('MainTab info received:', message.mainTabInfo);
     }
 });

@@ -56,3 +56,23 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
         console.log('レスポンスが更新されました。');
     }
 });
+
+// MainTab を取得ボタンのイベントリスナー
+document.getElementById('getMainTabButton').addEventListener('click', () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length > 0) {
+            const mainTab = tabs[0];
+            const mainTabInfo = `URL: ${mainTab.url}\nTitle: ${mainTab.title}`;
+            document.getElementById('mainTabInfo').innerText = mainTabInfo;
+            console.log('MainTab info:', mainTabInfo);
+
+            // 取得したデータをバックグラウンドスクリプトに送信
+            chrome.runtime.sendMessage({
+                action: 'logMainTabInfo',
+                mainTabInfo: mainTabInfo
+            });
+        } else {
+            console.log('No active tab found.');
+        }
+    });
+});
